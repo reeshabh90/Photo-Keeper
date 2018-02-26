@@ -17,7 +17,7 @@ export class PhotosComponent implements OnInit, OnDestroy {
   @Input() albumList: any; // Input variable for list of album from parent component : Albums
   private $photoSub: Subscription; // subscription reference api call for getting photos
   private $timerSub: Subscription; // subscription reference for Timer
-  counter;
+  counter; // counter variable
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
