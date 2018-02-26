@@ -10,6 +10,7 @@ import { timer } from 'rxjs/observable/timer';
   styleUrls: ['./photos.component.css']
 })
 export class PhotosComponent implements OnInit, OnDestroy {
+  title = 'Album Selected on Display';
   images; // variable to contain image list
   header; // variable to display album header
   @Input() selectedAlbums: any; // Input variable containing selected albums from Parent component : Albums

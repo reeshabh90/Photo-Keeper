@@ -1,9 +1,14 @@
-<div class="container">    
-    <h3>Album Selected on Display : {{header}}</h3>
-    <mat-grid-list  cols="10">      
-        <mat-grid-tile *ngFor="let image of images">
-            <img src="{{image.url}}" alt="{{image.title}}"> 
-        </mat-grid-tile>
-    </mat-grid-list>
+<div class="card">    
+    <div class="card-header">
+        <h3>{{title}} : {{header}}</h3>
+    </div>
+    <div class="card-block">
+        <mat-grid-list  cols="10">      
+                <mat-grid-tile *ngFor="let image of images">
+                    <img src="{{image.url}}" alt="{{image.title}}"> 
+                </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+
 </div>
 

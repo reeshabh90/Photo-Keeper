@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators/map';
 import { Router } from '@angular/router';
@@ -12,7 +11,7 @@ import { HttpRequestWrapperService } from './http-request-wrapper.service';
 @Injectable()
 export class DataService {
 
-  constructor(private http: HttpClient, private httpRequestWrapperService: HttpRequestWrapperService) { }
+  constructor(private httpRequestWrapperService: HttpRequestWrapperService) { }
 
   fetchUsers() {
     const requestData = {

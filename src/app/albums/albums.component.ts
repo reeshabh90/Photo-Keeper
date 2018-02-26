@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./albums.component.css']
 })
 export class AlbumsComponent implements OnInit, OnDestroy {
+  title = 'Album List';
   albums: any[];
   constructor(private dataService: DataService, private route: ActivatedRoute) { }
   selectedAlbums: string[] = [];

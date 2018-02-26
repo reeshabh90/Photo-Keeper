@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit, OnDestroy {
+  title = 'Users List';
   users: any;
   $userSub: Subscription;
   constructor(private dataService: DataService) { }
