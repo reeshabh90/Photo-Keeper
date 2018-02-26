@@ -1,0 +1,15 @@
+.album-card {
+    width: 30vw;
+    float: left;
+}
+.album-button{
+    text-align: center;
+    background: cornflowerblue;
+    height: auto;
+    width: auto;
+}
+#gallery{
+    float:left; 
+    width:60vw; 
+    height: 100vh
+}

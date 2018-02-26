@@ -1,0 +1,19 @@
+<mat-card class="album-card">
+    <mat-card-header>        
+        <mat-card-title><h2>Album List</h2></mat-card-title>        
+    </mat-card-header>
+    <mat-card-content>
+          <mat-selection-list #albumList [(ngModel)]="selectedAlbums" >
+              <mat-list-option
+                  #album
+                  *ngFor="let item of albums" [value]="item.id"
+                  [disabled]="albumList.selectedOptions.selected.length > 1 && !album.selected">
+                {{item.title}}
+              </mat-list-option>
+          </mat-selection-list>            
+      </mat-card-content>
+      <button class="album-button" mat-raised-button matTooltip="Click to view Photos!" (click)="photos.displayPhoto()">Show Photos</button>
+      <a routerLink="/users">Go back to Users List</a>
+</mat-card>
+<app-photos style="float:left; width:60vw; height: 100vh" #photos [selectedAlbums]="selectedAlbums" [albumList]="albums"></app-photos>
+
