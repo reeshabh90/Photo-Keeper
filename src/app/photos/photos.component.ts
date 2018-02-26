@@ -17,6 +17,7 @@ export class PhotosComponent implements OnInit, OnDestroy {
   @Input() albumList: any; // Input variable for list of album from parent component : Albums
   private $photoSub: Subscription; // subscription reference api call for getting photos
   private $timerSub: Subscription; // subscription reference for Timer
+  counter;
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
@@ -34,18 +35,18 @@ export class PhotosComponent implements OnInit, OnDestroy {
   }
   // This methods gets called from parent : Album Component on click of Show Photos button
   displayPhoto() {
-    let counter = 0; // setting counter to toggle between album selection as per odd/even values
+    this.counter = 0; // setting counter to toggle between album selection as per odd/even values
     if (this.selectedAlbums) {
       // Check if more than 1 albums are selected
       if (this.selectedAlbums.length > 1) {
         // starting timer with interval 20sec
         this.$timerSub = timer(0, 20000).subscribe(() => {
-          const displayCondition = counter % 2;
+          const displayCondition = this.counter % 2;
           // ON even condition, fetch 1st album
           if (displayCondition === 0) {
             this.$photoSub = this.dataService.fetchPhotos(this.selectedAlbums[displayCondition])
               .subscribe(res => {
-                counter += 1; this.images = res;
+                this.counter += 1; this.images = res;
                 const albumSelected = this.albumList.filter(x => x.id === this.selectedAlbums[displayCondition]);
                 this.header = albumSelected[0]['title'];
               });
@@ -53,7 +54,7 @@ export class PhotosComponent implements OnInit, OnDestroy {
             // ON odd condition, fetch 2nd album
             this.$photoSub = this.dataService.fetchPhotos(this.selectedAlbums[displayCondition])
               .subscribe(res => {
-                counter += 1; this.images = res;
+                this.counter += 1; this.images = res;
                 const albumSelected = this.albumList.filter(x => x.id === this.selectedAlbums[displayCondition]);
                 this.header = albumSelected[0]['title'];
               });
@@ -63,6 +64,7 @@ export class PhotosComponent implements OnInit, OnDestroy {
       } else {
         this.$photoSub = this.dataService.fetchPhotos(this.selectedAlbums[0])
           .subscribe(res => {
+            this.counter = 1;
             this.images = res;
             const albumSelected = this.albumList.filter(x => x.id === this.selectedAlbums[0]);
             this.header = albumSelected[0]['title'];
