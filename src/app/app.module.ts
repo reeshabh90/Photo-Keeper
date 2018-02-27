@@ -12,6 +12,7 @@ import { AppMaterialModules } from './material.module';
 import { PhotosComponent } from './photos/photos.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpRequestWrapperService } from './services/http-request-wrapper.service';
+import { AuthGuardService } from './services/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { HttpRequestWrapperService } from './services/http-request-wrapper.servi
     AppMaterialModules,
     BrowserAnimationsModule
   ],
-  providers: [DataService, HttpRequestWrapperService],
+  providers: [DataService, HttpRequestWrapperService, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
