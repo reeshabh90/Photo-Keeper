@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import 'rxjs/add/observable/interval';
 import { Observable } from 'rxjs/Observable';
 import { DataService } from '../services/data.service';
@@ -9,7 +9,7 @@ import { timer } from 'rxjs/observable/timer';
   templateUrl: './photos.component.html',
   styleUrls: ['./photos.component.css']
 })
-export class PhotosComponent implements OnInit, OnDestroy {
+export class PhotosComponent implements OnInit, OnDestroy, OnChanges {
   title = 'Album Selected on Display';
   images; // variable to contain image list
   header; // variable to display album header
@@ -18,58 +18,58 @@ export class PhotosComponent implements OnInit, OnDestroy {
   private $photoSub: Subscription; // subscription reference api call for getting photos
   private $timerSub: Subscription; // subscription reference for Timer
   counter; // counter variable
+  displayCondition;
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
   }
 
   ngOnDestroy() {
-    // Destroying active subscription
+    this.unSubscription();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['selectedAlbums']) {
+      this.counter = 0;
+      this.images = [];
+      this.unSubscription();
+    }
+  }
+  // This methods gets called from parent : Album Component on click of Show Photos button
+  displayPhoto() {
+    this.counter = 0;
+    if (this.selectedAlbums) {
+      if (this.selectedAlbums.length > 1) {
+        // starting timer with interval 20sec
+        this.$timerSub = timer(0, 20000).subscribe(() => {
+          this.displayCondition = this.counter % 2;
+          this.apiRequest(this.displayCondition);
+          this.counter += 1;
+        });
+      } else {
+        this.displayCondition = 0;
+        this.apiRequest(this.displayCondition);
+        this.counter = 1;
+      }
+    }
+  }
+  // method to retrieve photos data from api call
+  apiRequest(displayCondition) {
+    this.$photoSub = this.dataService.fetchPhotos(this.selectedAlbums[displayCondition])
+      .subscribe(res => {
+        this.images = res;
+        const albumSelected = this.albumList.filter(x => x.id === this.selectedAlbums[displayCondition]);
+        this.header = albumSelected[0]['title'];
+      });
+  }
+
+  unSubscription() {
+    // Unsubscribing active subscriptions
     if (this.$photoSub) {
       this.$photoSub.unsubscribe();
     }
     if (this.$timerSub) {
       this.$timerSub.unsubscribe();
-    }
-
-  }
-  // This methods gets called from parent : Album Component on click of Show Photos button
-  displayPhoto() {
-    this.counter = 0; // setting counter to toggle between album selection as per odd/even values
-    if (this.selectedAlbums) {
-      // Check if more than 1 albums are selected
-      if (this.selectedAlbums.length > 1) {
-        // starting timer with interval 20sec
-        this.$timerSub = timer(0, 20000).subscribe(() => {
-          const displayCondition = this.counter % 2;
-          // ON even condition, fetch 1st album
-          if (displayCondition === 0) {
-            this.$photoSub = this.dataService.fetchPhotos(this.selectedAlbums[displayCondition])
-              .subscribe(res => {
-                this.counter += 1; this.images = res;
-                const albumSelected = this.albumList.filter(x => x.id === this.selectedAlbums[displayCondition]);
-                this.header = albumSelected[0]['title'];
-              });
-          } else {
-            // ON odd condition, fetch 2nd album
-            this.$photoSub = this.dataService.fetchPhotos(this.selectedAlbums[displayCondition])
-              .subscribe(res => {
-                this.counter += 1; this.images = res;
-                const albumSelected = this.albumList.filter(x => x.id === this.selectedAlbums[displayCondition]);
-                this.header = albumSelected[0]['title'];
-              });
-          }
-
-        });
-      } else {
-        this.$photoSub = this.dataService.fetchPhotos(this.selectedAlbums[0])
-          .subscribe(res => {
-            this.counter = 1;
-            this.images = res;
-            const albumSelected = this.albumList.filter(x => x.id === this.selectedAlbums[0]);
-            this.header = albumSelected[0]['title'];
-          });
-      }
     }
   }
 

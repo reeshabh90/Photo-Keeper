@@ -20,6 +20,7 @@ describe('AlbumsComponent', () => {
   let el: HTMLElement;
   let dataService: DataService;
   let button: HTMLElement;
+  let link: HTMLElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -41,6 +42,8 @@ describe('AlbumsComponent', () => {
     el = de.nativeElement;
     de = fixture.debugElement.query(By.css('button'));
     button = de.nativeElement;
+    de = fixture.debugElement.query(By.css('a'));
+    link = de.nativeElement;
     fixture.detectChanges();
   });
 
@@ -57,6 +60,11 @@ describe('AlbumsComponent', () => {
   it('should display Show Photos', () => {
     fixture.detectChanges();
     expect(button.textContent).toContain('Show Photos');
+  });
+
+  it('should display Users List', () => {
+    fixture.detectChanges();
+    expect(link.textContent).toContain('Users List');
   });
 
   it('should display a different Album title', () => {

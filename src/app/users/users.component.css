@@ -1,5 +1,6 @@
-.card {
+.user-card {
     margin: 0 auto;
-    float: none; 
+    float: left; 
     margin-bottom: 10px; 
+    width: 70%
 }

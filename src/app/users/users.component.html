@@ -1,5 +1,4 @@
-
-  <div class="card">
+    <div class="card">
       <div class="card-header">
         <h2>{{title}}</h2>
       </div>
@@ -11,18 +10,21 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Address</th>
+                <th>Geolocation</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let user of users" >
-                <td><a [routerLink]="['/albums', user.id]" class="btn btn-default btn-lg" mat-raised-button matTooltip="Click to view Album List">{{ user.name }}</a></td>
+                <td><a [routerLink]="['/albums', user.id]" class="btn btn-default btn-lg" 
+                  mat-raised-button matTooltip="Click to view Album List">{{ user.name }}</a></td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.address.street}} {{user.address.suite}} {{user.address.city}} Zip : {{user.address.zipcode}} </td>
+                <td>{{ user.address.street}}, {{user.address.suite}}, {{user.address.city}}, Zip : {{user.address.zipcode}} </td>                
+                <td>lat: {{user.address.geo.lat}}, lng: {{user.address.geo.lng}}</td>
               </tr>
             </tbody>
           </table>
         
       </div>
-    </div>
-
+  </div>
+  
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
@@ -18,6 +18,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
   constructor(private dataService: DataService, private route: ActivatedRoute) { }
   selectedAlbums: string[] = [];
   $albumSub: Subscription;
+  @Input() userId: any;
   ngOnInit() {
     this.getAlbumByUserId(this.route.snapshot.params['id']);
   }
@@ -31,7 +32,6 @@ export class AlbumsComponent implements OnInit, OnDestroy {
   getAlbumByUserId(userId) {
     this.$albumSub = this.dataService.fetchAlbums(userId).subscribe(res => { this.albums = res; });
   }
-
 
 
 }

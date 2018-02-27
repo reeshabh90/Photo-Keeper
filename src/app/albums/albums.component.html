@@ -3,17 +3,18 @@
         <mat-card-title><h2>{{title}}</h2></mat-card-title>        
     </mat-card-header>
     <mat-card-content class="card-block">
-          <mat-selection-list #albumList [(ngModel)]="selectedAlbums" >
-              <mat-list-option
+          <mat-selection-list #albumList [(ngModel)]="selectedAlbums">
+              <mat-list-option matTooltip="Select album(s) and click Show Photos"
                   #album
                   *ngFor="let item of albums" [value]="item.id"
                   [disabled]="albumList.selectedOptions.selected.length > 1 && !album.selected">
                 {{item.title}}
               </mat-list-option>
           </mat-selection-list>            
-      </mat-card-content>
-      <button [disabled]="albumList.selectedOptions.selected.length === 0" class="album-button" mat-raised-button matTooltip="Click to view Photos!" (click)="photos.displayPhoto()">Show Photos</button>
-      <a routerLink="/users">Go back to Users List</a>
+    </mat-card-content>
+    <button [disabled]="albumList.selectedOptions.selected.length === 0" class="album-button" 
+        mat-raised-button matTooltip="Click to view Photos!" (click)="photos.displayPhoto()">Show Photos</button>      
+    <a routerLink="/users">Users List</a>
 </mat-card>
-<app-photos style="float:left; width:60vw; height: 100vh" #photos [selectedAlbums]="selectedAlbums" [albumList]="albums"></app-photos>
+<app-photos #photos [albumList]="albums" [selectedAlbums]="selectedAlbums"></app-photos>
 
