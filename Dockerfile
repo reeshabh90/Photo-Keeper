@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY package*.json ./
 
-RUN ng build --prod
+RUN npm run build
 # If you are building your code for production
 # RUN npm install --only=production
 
