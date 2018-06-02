@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  API_BASE: '',
+  API_BASE: 'https://jsonplaceholder.typicode.com',
   endpoints: {
     GET_USERS: {
       endpoint: '/users',
